@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-10px, 10px); }
+            50% { transform: translate(10px, -10px); }
+            75% { transform: translate(-10px, -10px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #d63384;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            transition: 0.3s ease;
+        }
+
+        #yes {
+            background-color: #28a745;
+            color: white;
+        }
+        #yes:hover {
+            background-color: #218838;
+        }
+
+        #no {
+            background-color: #dc3545;
+            color: white;
+            position: relative;
+        }
+
+        #message-container {
+            display: none;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #d63384;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .gif-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .letter {
+            display: none;
+            padding: 20px;
+            background: white;
+            border: 2px solid #d63384;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+            margin-top: 15px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 50px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <h1 id="valentine-text">Can you be my Valentine? 💕</h1>
+        <div class="button-group">
+            <button id="yes">Yes</button>
+            <button id="no">No</button>
+        </div>
+        <div id="message-container">
+            <p>YAY! 🎉 Happy Valentine's Day! ❤️</p>
+            <button id="open-letter">Open Your Letter 💌</button>
+        </div>
+        <div class="gif-container" id="gif-container">
+            <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif" alt="Dancing Gif">
+        </div>
+        <div class="letter" id="letter">
+            <p>My Lolove,</p>
+            <p>Thank you for being the best Girl ever. Sometimes, we fight. But I am so grateful to have you in my life. Thank you for being the amazing person you are. Happy Valentine's Day! ❤️</p>
+            <p>Forever yours,</p>
+            <p>SOL!!!!!!</p>
+        </div>
+    </div>
+
+    <script>
+        let noButton = document.getElementById("no");
+        let yesButton = document.getElementById("yes");
+        let messageContainer = document.getElementById("message-container");
+        let valentineText = document.getElementById("valentine-text");
+        let gifContainer = document.getElementById("gif-container");
+        let letter = document.getElementById("letter");
+        let openLetterButton = document.getElementById("open-letter");
+        let angerLevel = 0;
+
+        noButton.addEventListener("mouseover", function() {
+            let containerRect = document.querySelector(".container").getBoundingClientRect();
+            let x = Math.random() * (containerRect.width - 100);
+            let y = Math.random() * (containerRect.height - 50);
+            noButton.style.position = "absolute";
+            noButton.style.left = x + "px";
+            noButton.style.top = y + "px";
+            increaseAnger();
+        });
+
+        yesButton.addEventListener("click", function() {
+            messageContainer.style.display = "block";
+            document.body.style.background = "linear-gradient(to right, #ff69b4, #ff1493)";
+            valentineText.style.display = "none";
+            noButton.remove();
+            gifContainer.style.display = "block";
+            document.querySelectorAll(".emoji").forEach(e => e.remove());
+        });
+
+        openLetterButton.addEventListener("click", function() {
+            letter.style.display = "block";
+            openLetterButton.style.display = "none";
+        });
+
+        function increaseAnger() {
+            angerLevel++;
+            document.body.style.animation = "shake 0.3s";
+            setTimeout(() => { document.body.style.animation = "none"; }, 300);
+            document.body.style.backgroundColor = `rgb(255, ${150 - angerLevel * 15}, ${150 - angerLevel * 15})`;
+            
+            for (let i = 0; i < 5; i++) {
+                let emoji = document.createElement("div");
+                emoji.classList.add("emoji");
+                emoji.textContent = "😡";
+                emoji.style.left = Math.random() * window.innerWidth + "px";
+                emoji.style.top = Math.random() * window.innerHeight + "px";
+                document.body.appendChild(emoji);
+            }
+        }
+    </script>
+</body>
+</html>
